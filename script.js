@@ -105,7 +105,7 @@ function contentPages() {
             <div class="key symbol" id="Equal">=</div>
             <div class="key control-key middle backspace" id="backspase">backspase</div>
         </div>
-        <div class="cecond-row">
+        <div class="second-row">
             <div class="key control-key tab" id="Tab">tab</div>
             <div class="key letter" data-i18="q" id="KeyQ">q</div>
             <div class="key letter" data-i18="w" id="KeyW">w</div>
@@ -135,7 +135,6 @@ function contentPages() {
             <div class="key letter" data-i18="l" id="KeyL">l</div>
             <div class="key letter symbol" data-i18=";" id="Semicolon">;</div>
             <div class="key letter symbol" data-i18="quotes" id="Quote">'</div>
-            <div class="key letter symbol" data-i18="]" id="BracketRight">]</div>
             <div class="key control-key middle enter" id='Enter'>Enter</div>
         </div>
         <div class="fought-row">
@@ -153,10 +152,9 @@ function contentPages() {
             <div class="key control-key arrow-up arrow" id='ArrowUp'>▲</div>
             <div class="key control-key middle shift" id='ShiftRight'>shift</div>
         </div>
-        <div class="fought-row">
+        <div class="five-row">
             <div class="key control-key" id='ControlLeft'>ctrl</div>
             <div class="key control-key" id='MetaLeft'>win</div>
-            <div class="key control-key middle shift" id='ShiftRight'>shift</div>
             <div class="key control-key" id='AltLeft'>alt</div>
             <div class="key big" id='Space'> </div>
             <div class="key control-key arrow" id='ArrowLeft'>◄</div>
@@ -181,8 +179,6 @@ const letters = document.querySelectorAll(".letter");
 const symbols = document.querySelectorAll(".symbol");
 const digits = document.querySelectorAll(".digit");
 const data = document.querySelectorAll("[data-i18]");
-
-console.log(data);
 
 function onShift() {
   const [one, two, three, four, five, six, seven, eoght, nine, zero] = digits;
@@ -287,3 +283,33 @@ function translation() {
     elem.textContent = i180bj[lang][elem.dataset.i18];
   });
 }
+
+function lowerUpperLetter() {
+  if (capsLocked) {
+    letters.forEach((letter) => {
+      letter.textContent = letter.textContent.toLowerCase();
+    });
+  } else if (!capsLocked) {
+    letters.forEach((letter) => {
+      letter.textContent = letter.textContent.toUpperCase();
+    });
+  }
+}
+
+function delFormText() {
+  if (positionCursor > 0) {
+    textTextArea =
+      textTextArea.substring(0, textArea.selectionStart - 1) +
+      textTextArea.substring(textArea.selectionEnd);
+    positionCursor -= 1;
+  }
+}
+function buttonDel() {
+  textTextArea =
+    textTextArea.substring(0, textArea.selectionStart) +
+    textTextArea.substring(textArea.selectionEnd + 1);
+}
+
+textArea.addEventListener("click", () => {
+  positionCursor = textArea.selectionStart;
+});
