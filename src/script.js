@@ -87,7 +87,7 @@ const body = document.querySelector("body");
 
 function contentPages() {
   const content = `<div class="wrapper">
-    <h1>Keyboard</h1>
+    <h1>Virtual Keyboard</h1>
     <textarea name="textarea" class="textarea" autofocus></textarea>
     <div class="keyboard">
         <div class="first-row">
@@ -165,6 +165,8 @@ function contentPages() {
             <div class="key control-key" id='ControlRight'>ctrl</div>
         </div>
     </div>
+    <p>Available hotkeys:
+    Ctrl + Alt - switch language</p>
 </div>`;
   body.insertAdjacentHTML("afterbegin", content);
 }
