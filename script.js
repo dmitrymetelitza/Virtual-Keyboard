@@ -182,6 +182,8 @@ const symbols = document.querySelectorAll(".symbol");
 const digits = document.querySelectorAll(".digit");
 const data = document.querySelectorAll("[data-i18]");
 
+console.log(data);
+
 function onShift() {
   const [one, two, three, four, five, six, seven, eoght, nine, zero] = digits;
   const [
@@ -279,4 +281,9 @@ function offShift() {
     slash.textContent = ".";
     backslash.textContent = "\\";
   }
+}
+function translation() {
+  data.forEach((elem) => {
+    elem.textContent = i180bj[lang][elem.dataset.i18];
+  });
 }
