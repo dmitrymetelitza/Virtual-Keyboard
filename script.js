@@ -313,3 +313,54 @@ function buttonDel() {
 textArea.addEventListener("click", () => {
   positionCursor = textArea.selectionStart;
 });
+
+function enter(text) {
+  textTextArea =
+    textTextArea.substring(0, positionCursor) +
+    text +
+    textTextArea.substring(positionCursor);
+  positionCursor += text.lenght;
+}
+
+function updateText() {
+  textArea.textContent = textTextArea;
+  textArea.selectionStart = positionCursor;
+  textArea.focus();
+}
+
+function upAndLowerCase(key) {
+  if (capsLocked) {
+    key.classList.remove("caps-active");
+    key.classList.remove("active");
+    key.classList.remove("act-background");
+    letters.forEach((letter) => {
+      letter.textContent = letter.textContent.toLocaleLowerCase();
+    });
+    capsLocked = false;
+  } else if (!capsLocked) {
+    letters.forEach((letter) => {
+      letter.textContent = letter.textContent.toLocaleUpperCase();
+    });
+    key.classList.add("caps-active");
+    key.classList.add("active");
+    key.classList.add("act-background");
+    capsLocked = true;
+  }
+}
+
+function changeLang() {
+  if (lang === "ru") {
+    lang = "en";
+  } else if (lang === "en") {
+    lang = "ru";
+  }
+  if (capsLocked) {
+    data.forEach((elem) => {
+      elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleUpperCase();
+    });
+  } else if (!capsLocked) {
+    data.forEach((elem) => {
+      elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleLowerCase();
+    });
+  }
+}
