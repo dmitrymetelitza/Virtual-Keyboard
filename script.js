@@ -394,3 +394,57 @@ function SetPressedKey(key) {
   }
   updateText();
 }
+
+function pressureKey(el) {
+  const key = document.querySelector(`#${el.code}`);
+  if (key) {
+    if (key.classList.contains("control-key")) {
+      key.classList.add("active-background");
+    }
+    key.classList.add("active");
+    if (key.classList.contains("shift")) {
+      onShift();
+      lowerUpperLetter();
+    }
+    SetPressedKey(key);
+  }
+  if (
+    controlLeft.classList.contains("active") &&
+    altLeft.classList.contains("active")
+  ) {
+    changeLang();
+  }
+  if (
+    controlRight.classList.contains("active") &&
+    altRight.classList.contains("active")
+  ) {
+    changeLang();
+  }
+  if (
+    controlRight.classList.contains("active") &&
+    altLeft.classList.contains("active")
+  ) {
+    changeLang();
+  }
+  if (
+    controlLeft.classList.contains("active") &&
+    altRight.classList.contains("active")
+  ) {
+    changeLang();
+  }
+}
+
+function UpKey(key) {
+  if (key.classList.contains("shift")) {
+    if (!capsLocked) {
+      letters.forEach((letter) => {
+        letter.textContent = letter.textContent.toLocaleLowerCase();
+      });
+    } else if (capsLocked) {
+      letters.forEach((letter) => {
+        letter.textContent = letter.textContent.toUpperCase();
+      });
+    }
+    offShift();
+  }
+}
