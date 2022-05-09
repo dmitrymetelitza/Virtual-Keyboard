@@ -448,3 +448,45 @@ function UpKey(key) {
     offShift();
   }
 }
+
+function releaseKey(el) {
+  const key = document.querySelector(`#${el.code}`);
+  if (key) {
+    if (
+      key.classList.contains("control-key") &&
+      !key.classList.contains("capslock")
+    ) {
+      key.classList.remove("active-background");
+    }
+    if (!key.classList.contains("capslock")) {
+      key.classList.remove("active");
+    }
+    UpKey(key);
+  }
+}
+
+document.addEventListener("keydown", pressureKey);
+document.addEventListener("keyup", releaseKey);
+
+shift.forEach((shif) =>
+  shift.addEventListener("mousedown", () => {
+    onShift();
+    lowerUpperLetter();
+  })
+);
+
+shift.forEach((shif) =>
+  shift.addEventListener("mouseup", (el) => {
+    const key = el.target;
+    UpKey(key);
+  })
+);
+
+function indentKey(e) {
+  const key = e.target;
+  SetPressedKey(key);
+}
+
+virtualKeyboard.addEventListener("click", indentKey);
+
+translation();
