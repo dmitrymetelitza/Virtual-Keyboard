@@ -1,4 +1,4 @@
-const i180bj = {
+const buttons = {
   en: {
     backquote: "`",
     q: "q",
@@ -285,7 +285,7 @@ function offShift() {
 function translation() {
   data.forEach((el) => {
     const elem = el;
-    elem.textContent = i180bj[lang][elem.dataset.i18];
+    elem.textContent = buttons[lang][elem.dataset.i18];
   });
 }
 
@@ -369,12 +369,12 @@ function changeLang() {
   if (capsLocked) {
     data.forEach((el) => {
       const elem = el;
-      elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleUpperCase();
+      elem.textContent = buttons[lang][elem.dataset.i18].toLocaleUpperCase();
     });
   } else if (!capsLocked) {
     data.forEach((el) => {
       const elem = el;
-      elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleLowerCase();
+      elem.textContent = buttons[lang][elem.dataset.i18].toLocaleLowerCase();
     });
   }
 }
