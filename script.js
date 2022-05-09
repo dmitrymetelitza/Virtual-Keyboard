@@ -354,6 +354,8 @@ function changeLang() {
   } else if (lang === "en") {
     lang = "ru";
   }
+
+  saveToLocal();
   if (capsLocked) {
     data.forEach((elem) => {
       elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleUpperCase();
@@ -363,4 +365,32 @@ function changeLang() {
       elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleLowerCase();
     });
   }
+}
+function saveToLocal() {
+  localStorage.setItem("lang", lang);
+}
+
+function SetPressedKey(key) {
+  if (key.classList.contains("key") && !key.classList.contains("control-key")) {
+    enter(key.textContent);
+  }
+  if (key.classList.contains("arrow")) {
+    enter(key.textContent);
+  }
+  if (key.classList.contains("capslock")) {
+    upAndLowerCase(key);
+  }
+  if (key.classList.contains("enter")) {
+    enter("\n");
+  }
+  if (key.classList.contains("tab")) {
+    enter("\t");
+  }
+  if (key.classList.contains("backspase")) {
+    delFormText();
+  }
+  if (key.classList.contains("del")) {
+    buttonDel();
+  }
+  updateText();
 }
