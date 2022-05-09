@@ -27,8 +27,8 @@ body {
 .first-row,
 .second-row,
 .third-row,
-.fought-row,
-.five-row {
+.fourth-row,
+.fifth-row {
   display: flex;
 }
 
@@ -55,7 +55,7 @@ body {
   border-radius: 50px;
 }
 
-#backspase {
+#Backspace {
   width: 120px;
 }
 #Tab {
@@ -69,6 +69,6 @@ body {
   width: 128px;
 }
 #Space {
-  max-width: 525px;
+  max-width: 465px;
   width: 100%;
 }

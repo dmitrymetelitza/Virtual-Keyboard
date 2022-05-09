@@ -77,10 +77,11 @@ const i180bj = {
   },
 };
 
-let lang = "en";
+const defaultLang = "en";
+let lang = localStorage.getItem("lang" || defaultLang);
 let capsLocked = false;
 let positionCursor = 0;
-let textTextArea = "";
+let textForm = "";
 
 const body = document.querySelector("body");
 
@@ -103,7 +104,7 @@ function contentPages() {
             <div class="key digit" id="Digit0">0</div>
             <div class="key symbol" id="Minus">-</div>
             <div class="key symbol" id="Equal">=</div>
-            <div class="key control-key middle backspace" id="backspase">backspase</div>
+            <div class="key control-key middle backspace" id="Backspace">backspaсe</div>
         </div>
         <div class="second-row">
             <div class="key control-key tab" id="Tab">tab</div>
@@ -137,7 +138,7 @@ function contentPages() {
             <div class="key letter symbol" data-i18="quotes" id="Quote">'</div>
             <div class="key control-key middle enter" id='Enter'>Enter</div>
         </div>
-        <div class="fought-row">
+        <div class="fourth-row">
             <div class="key control-key mniddle shift" id="ShiftLeft">shift</div>
             <div class="key letter" data-i18="z" id="KeyZ">z</div>
             <div class="key letter" data-i18="x" id="KeyX">x</div>
@@ -152,11 +153,12 @@ function contentPages() {
             <div class="key control-key arrow-up arrow" id='ArrowUp'>▲</div>
             <div class="key control-key middle shift" id='ShiftRight'>shift</div>
         </div>
-        <div class="five-row">
+        <div class="fifth-row">
             <div class="key control-key" id='ControlLeft'>ctrl</div>
             <div class="key control-key" id='MetaLeft'>win</div>
             <div class="key control-key" id='AltLeft'>alt</div>
             <div class="key big" id='Space'> </div>
+            <div class="key control-key" id="AltRight">alt</div>
             <div class="key control-key arrow" id='ArrowLeft'>◄</div>
             <div class="key control-key arrow" id='ArrowDown'>▼</div>
             <div class="key control-key arrow" id='ArrowRight'>►</div>
@@ -173,7 +175,7 @@ const textArea = document.querySelector(".textarea");
 const altRight = document.querySelector("#AltRight");
 const altLeft = document.querySelector("#AltLeft");
 const controlLeft = document.querySelector("#ControlLeft");
-const controlRight = document.querySelector("#ControlRihgt");
+const controlRight = document.querySelector("#ControlRight");
 const shift = document.querySelectorAll(".shift");
 const letters = document.querySelectorAll(".letter");
 const symbols = document.querySelectorAll(".symbol");
@@ -279,18 +281,21 @@ function offShift() {
   }
 }
 function translation() {
-  data.forEach((elem) => {
+  data.forEach((el) => {
+    const elem = el;
     elem.textContent = i180bj[lang][elem.dataset.i18];
   });
 }
 
 function lowerUpperLetter() {
   if (capsLocked) {
-    letters.forEach((letter) => {
+    letters.forEach((l) => {
+      const letter = l;
       letter.textContent = letter.textContent.toLowerCase();
     });
   } else if (!capsLocked) {
-    letters.forEach((letter) => {
+    letters.forEach((l) => {
+      const letter = l;
       letter.textContent = letter.textContent.toUpperCase();
     });
   }
@@ -298,16 +303,16 @@ function lowerUpperLetter() {
 
 function delFormText() {
   if (positionCursor > 0) {
-    textTextArea =
-      textTextArea.substring(0, textArea.selectionStart - 1) +
-      textTextArea.substring(textArea.selectionEnd);
+    textForm =
+      textForm.substring(0, textArea.selectionStart - 1) +
+      textForm.substring(textArea.selectionEnd);
     positionCursor -= 1;
   }
 }
 function buttonDel() {
-  textTextArea =
-    textTextArea.substring(0, textArea.selectionStart) +
-    textTextArea.substring(textArea.selectionEnd + 1);
+  textForm =
+    textForm.substring(0, textArea.selectionStart) +
+    textForm.substring(textArea.selectionEnd + 1);
 }
 
 textArea.addEventListener("click", () => {
@@ -315,15 +320,16 @@ textArea.addEventListener("click", () => {
 });
 
 function enter(text) {
-  textTextArea =
-    textTextArea.substring(0, positionCursor) +
+  textForm =
+    textForm.substring(0, positionCursor) +
     text +
-    textTextArea.substring(positionCursor);
-  positionCursor += text.lenght;
+    textForm.substring(positionCursor);
+  positionCursor += text.length;
+  console.log(text.lenght);
 }
 
 function updateText() {
-  textArea.textContent = textTextArea;
+  textArea.textContent = textForm;
   textArea.selectionStart = positionCursor;
   textArea.focus();
 }
@@ -333,12 +339,14 @@ function upAndLowerCase(key) {
     key.classList.remove("caps-active");
     key.classList.remove("active");
     key.classList.remove("act-background");
-    letters.forEach((letter) => {
+    letters.forEach((l) => {
+      const letter = l;
       letter.textContent = letter.textContent.toLocaleLowerCase();
     });
     capsLocked = false;
   } else if (!capsLocked) {
-    letters.forEach((letter) => {
+    letters.forEach((l) => {
+      const letter = l;
       letter.textContent = letter.textContent.toLocaleUpperCase();
     });
     key.classList.add("caps-active");
@@ -357,11 +365,13 @@ function changeLang() {
 
   saveToLocal();
   if (capsLocked) {
-    data.forEach((elem) => {
+    data.forEach((el) => {
+      const elem = el;
       elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleUpperCase();
     });
   } else if (!capsLocked) {
-    data.forEach((elem) => {
+    data.forEach((el) => {
+      const elem = el;
       elem.textContent = i180bj[lang][elem.dataset.i18].toLocaleLowerCase();
     });
   }
@@ -386,7 +396,7 @@ function SetPressedKey(key) {
   if (key.classList.contains("tab")) {
     enter("\t");
   }
-  if (key.classList.contains("backspase")) {
+  if (key.classList.contains("backspace")) {
     delFormText();
   }
   if (key.classList.contains("del")) {
@@ -398,6 +408,9 @@ function SetPressedKey(key) {
 function pressureKey(el) {
   const key = document.querySelector(`#${el.code}`);
   if (key) {
+    if (key.classList.contains("key")) {
+      el.preventDefault();
+    }
     if (key.classList.contains("control-key")) {
       key.classList.add("active-background");
     }
@@ -437,11 +450,13 @@ function pressureKey(el) {
 function UpKey(key) {
   if (key.classList.contains("shift")) {
     if (!capsLocked) {
-      letters.forEach((letter) => {
+      letters.forEach((l) => {
+        const letter = l;
         letter.textContent = letter.textContent.toLocaleLowerCase();
       });
     } else if (capsLocked) {
-      letters.forEach((letter) => {
+      letters.forEach((l) => {
+        const letter = l;
         letter.textContent = letter.textContent.toUpperCase();
       });
     }
@@ -469,14 +484,14 @@ document.addEventListener("keydown", pressureKey);
 document.addEventListener("keyup", releaseKey);
 
 shift.forEach((shif) =>
-  shift.addEventListener("mousedown", () => {
+  shif.addEventListener("mousedown", () => {
     onShift();
     lowerUpperLetter();
   })
 );
 
 shift.forEach((shif) =>
-  shift.addEventListener("mouseup", (el) => {
+  shif.addEventListener("mouseup", (el) => {
     const key = el.target;
     UpKey(key);
   })
