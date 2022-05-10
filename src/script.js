@@ -34,6 +34,8 @@ const buttons = {
     comma: ",",
     period: ".",
     slash: "/",
+    system: "keyboard created in windows system",
+    changing: "for changing language: ctrl + alt",
   },
   ru: {
     backquote: "ё",
@@ -70,6 +72,8 @@ const buttons = {
     comma: "б",
     period: "ю",
     slash: ".",
+    system: "клавиатура создана в операционной системе windows",
+    changing: "для переключения языка: ctrl + alt",
   },
 };
 
@@ -80,90 +84,92 @@ let positionCursor = 0;
 let textForm = "";
 
 const body = document.querySelector("body");
-
 function contentPages() {
   const content = `<div class="wrapper">
-    <h1>Virtual Keyboard</h1>
-    <textarea name="textarea" class="textarea" autofocus></textarea>
-    <div class="keyboard">
-        <div class="first-row">
-            <div class="key letter symbol" data-i18n="backquote" id="Backquote">\`</div>
-            <div class="key digit" id="Digit1">1</div>
-            <div class="key digit" id="Digit2">2</div>
-            <div class="key digit" id="Digit3">3</div>
-            <div class="key digit" id="Digit4">4</div>
-            <div class="key digit" id="Digit5">5</div>
-            <div class="key digit" id="Digit6">6</div>
-            <div class="key digit" id="Digit7">7</div>
-            <div class="key digit" id="Digit8">8</div>
-            <div class="key digit" id="Digit9">9</div>
-            <div class="key digit" id="Digit0">0</div>
-            <div class="key symbol" id="Minus">-</div>
-            <div class="key symbol" id="Equal">=</div>
-            <div class="key control-key middle backspace" id="Backspace">backspaсe</div>
-        </div>
-        <div class="second-row">
-            <div class="key control-key tab" id="Tab">tab</div>
-            <div class="key letter" data-i18n="q" id="KeyQ">q</div>
-            <div class="key letter" data-i18n="w" id="KeyW">w</div>
-            <div class="key letter" data-i18n="e" id="KeyE">e</div>
-            <div class="key letter" data-i18n="r" id="KeyR">r</div>
-            <div class="key letter" data-i18n="t" id="KeyT">t</div>
-            <div class="key letter" data-i18n="y" id="KeyY">y</div>
-            <div class="key letter" data-i18n="u" id="KeyU">u</div>
-            <div class="key letter" data-i18n="i" id="KeyI">i</div>
-            <div class="key letter" data-i18n="o" id="KeyO">o</div>
-            <div class="key letter" data-i18n="p" id="KeyP">p</div>
-            <div class="key letter symbol" data-i18n="[" id="BracketLeft">[</div>
-            <div class="key letter symbol" data-i18n="]" id="BracketRight">]</div>
-            <div class="key symbol" id="Backslash">\\</div>
-            <div class="key control-key del" id='Delete'>del</div>
-        </div>
-        <div class="third-row">
-            <div class="key control-key middle capslock" id="CapsLock">caps lock</div>
-            <div class="key letter" data-i18n="a" id="KeyA">a</div>
-            <div class="key letter" data-i18n="s" id="KeyS">s</div>
-            <div class="key letter" data-i18n="d" id="KeyD">d</div>
-            <div class="key letter" data-i18n="f" id="KeyF">f</div>
-            <div class="key letter" data-i18n="g" id="KeyG">g</div>
-            <div class="key letter" data-i18n="h" id="KeyH">h</div>
-            <div class="key letter" data-i18n="j" id="KeyJ">j</div>
-            <div class="key letter" data-i18n="k" id="KeyK">k</div>
-            <div class="key letter" data-i18n="l" id="KeyL">l</div>
-            <div class="key letter symbol" data-i18n=";" id="Semicolon">;</div>
-            <div class="key letter symbol" data-i18n="quotes" id="Quote">'</div>
-            <div class="key control-key middle enter" id='Enter'>Enter</div>
-        </div>
-        <div class="fourth-row">
-            <div class="key control-key mniddle shift" id="ShiftLeft">shift</div>
-            <div class="key letter" data-i18n="z" id="KeyZ">z</div>
-            <div class="key letter" data-i18n="x" id="KeyX">x</div>
-            <div class="key letter" data-i18n="c" id="KeyC">c</div>
-            <div class="key letter" data-i18n="v" id="KeyV">v</div>
-            <div class="key letter" data-i18n="b" id="KeyB">b</div>
-            <div class="key letter" data-i18n="n" id="KeyN">n</div>
-            <div class="key letter" data-i18n="m" id="KeyM">m</div>
-            <div class="key letter symbol" data-i18n="comma" id="Comma">,</div>
-            <div class="key letter symbol" data-i18n="period" id="Period">.</div>
-            <div class="key symbol" data-i18n="slash" id="Slash">/</div>
-            <div class="key control-key arrow-up arrow" id='ArrowUp'>▲</div>
-            <div class="key control-key middle shift" id='ShiftRight'>shift</div>
-        </div>
-        <div class="fifth-row">
-            <div class="key control-key" id='ControlLeft'>ctrl</div>
-            <div class="key control-key" id='MetaLeft'>win</div>
-            <div class="key control-key" id='AltLeft'>alt</div>
-            <div class="key big" id='Space'> </div>
-            <div class="key control-key" id="AltRight">alt</div>
-            <div class="key control-key arrow" id='ArrowLeft'>◄</div>
-            <div class="key control-key arrow" id='ArrowDown'>▼</div>
-            <div class="key control-key arrow" id='ArrowRight'>►</div>
-            <div class="key control-key" id='ControlRight'>ctrl</div>
-        </div>
-    </div>
-    <p>Available hotkeys:
-    Ctrl + Alt - switch language</p>
-</div>`;
+                          <h1>Virtual Keyboard</h1>
+                          <textarea name="textarea" class="textarea" autofocus></textarea>
+                          <div class="keyboard">
+                              <div class="first-row">
+                                  <div class="key letter symbol" data-i18n="backquote" id='Backquote'>\`</div>
+                                  <div class="key digit" id="Digit1">1</div>
+                                  <div class="key digit" id="Digit2">2</div>
+                                  <div class="key digit" id="Digit3">3</div>
+                                  <div class="key digit" id="Digit4">4</div>
+                                  <div class="key digit" id="Digit5">5</div>
+                                  <div class="key digit" id="Digit6">6</div>
+                                  <div class="key digit" id="Digit7">7</div>
+                                  <div class="key digit" id="Digit8">8</div>
+                                  <div class="key digit" id="Digit9">9</div>
+                                  <div class="key digit" id="Digit0">0</div>
+                                  <div class="key symbol" id="Minus">-</div>
+                                  <div class="key symbol" id="Equal">=</div>
+                                  <div class="key control-key middle backspace" id="Backspace">backspace</div>
+                              </div>
+                              <div class="second-row">
+                                  <div class="key control-key tab" id="Tab">tab</div>
+                                  <div class="key letter" data-i18n="q" id="KeyQ">q</div>
+                                  <div class="key letter" data-i18n="w" id="KeyW">w</div>
+                                  <div class="key letter" data-i18n="e" id="KeyE">e</div>
+                                  <div class="key letter" data-i18n="r" id="KeyR">r</div>
+                                  <div class="key letter" data-i18n="t" id="KeyT">t</div>
+                                  <div class="key letter" data-i18n="y" id="KeyY">y</div>
+                                  <div class="key letter" data-i18n="u" id="KeyU">u</div>
+                                  <div class="key letter" data-i18n="i" id="KeyI">i</div>
+                                  <div class="key letter" data-i18n="o" id="KeyO">o</div>
+                                  <div class="key letter" data-i18n="p" id="KeyP">p</div>
+                                  <div class="key letter symbol" data-i18n="[" id="BracketLeft">[</div>
+                                  <div class="key letter symbol" data-i18n="]" id="BracketRight">]</div>
+                                  <div class="key symbol" id="Backslash">\\</div>
+                                  <div class="key control-key del" id="Delete">del</div>
+                              </div>
+                              <div class="third-row">
+                                  <div class="key control-key middle capslock" id="CapsLock">caps lock</div>
+                                  <div class="key letter" data-i18n="a" id="KeyA">a</div>
+                                  <div class="key letter" data-i18n="s" id="KeyS">s</div>
+                                  <div class="key letter" data-i18n="d" id="KeyD">d</div>
+                                  <div class="key letter" data-i18n="f" id="KeyF">f</div>
+                                  <div class="key letter" data-i18n="g" id="KeyG">g</div>
+                                  <div class="key letter" data-i18n="h" id="KeyH">h</div>
+                                  <div class="key letter" data-i18n="j" id="KeyJ">j</div>
+                                  <div class="key letter" data-i18n="k" id="KeyK">k</div>
+                                  <div class="key letter" data-i18n="l" id="KeyL">l</div>
+                                  <div class="key letter symbol" data-i18n=";" id="Semicolon">;</div>
+                                  <div class="key letter symbol" data-i18n="quotes" id="Quote">'</div>
+                                  <div class="key control-key middle enter" id="Enter">enter</div>
+                              </div>
+                              <div class="fourth-row">
+                                  <div class="key control-key middle shift" id="ShiftLeft">shift</div>
+                                  <div class="key letter" data-i18n="z" id="KeyZ">z</div>
+                                  <div class="key letter" data-i18n="x" id="KeyX">x</div>
+                                  <div class="key letter" data-i18n="c" id="KeyC">c</div>
+                                  <div class="key letter" data-i18n="v" id="KeyV">v</div>
+                                  <div class="key letter" data-i18n="b" id="KeyB">b</div>
+                                  <div class="key letter" data-i18n="n" id="KeyN">n</div>
+                                  <div class="key letter" data-i18n="m" id="KeyM">m</div>
+                                  <div class="key letter symbol" data-i18n="comma" id="Comma">,</div>
+                                  <div class="key letter symbol" data-i18n="period" id="Period">.</div>
+                                  <div class="key symbol" data-i18n="slash" id="Slash">/</div>
+                                  <div class="key control-key arrow-up arrow" id="ArrowUp">▲</div>
+                                  <div class="key control-key middle shift" id="ShiftRight">shift</div>
+                              </div>
+                              <div class="fifth-row">
+                                  <div class="key control-key control-left" id="ControlLeft">ctrl</div>
+                                  <div class="key control-key" id="MetaLeft">win</div>
+                                  <div class="key control-key alt-left" id="AltLeft">alt</div>
+                                  <div class="key big" id="Space"> </div>
+                                  <div class="key control-key alt-right" id="AltRight">alt</div>
+                                  <div class="key control-key arrow" id="ArrowLeft">◄</div>
+                                  <div class="key control-key arrow" id="ArrowDown">▼</div>
+                                  <div class="key control-key arrow" id="ArrowRight">►</div>
+                                  <div class="key control-key control-right" id="ControlRight">ctrl</div>
+                              </div>
+                          </div>
+                          <div class="addition">
+                              <p data-i18n="system">Virtualkeyboard/p>
+                              <p data-i18n="changing">for changing language: ctrl + alt</p>
+                          </div>
+                      </div>`;
+
   body.insertAdjacentHTML("afterbegin", content);
 }
 contentPages();
@@ -236,21 +242,20 @@ function onShift() {
 }
 
 function offShift() {
-  const [one, two, three, four, five, six, seven, eoght, nine, zero] = digits;
+  const [one, two, three, four, five, six, seven, eight, nine, zero] = digits;
   const [
-    slash,
-    period,
-    comma,
-    quote,
-    semicolon,
-    backslash,
-    breacketright,
-    breacketleft,
-    equal,
-    minus,
     backquote,
+    minus,
+    equal,
+    bracketleft,
+    bracketright,
+    backslash,
+    semicolon,
+    quote,
+    comma,
+    period,
+    slash,
   ] = symbols;
-
   one.textContent = "1";
   two.textContent = "2";
   three.textContent = "3";
@@ -258,37 +263,35 @@ function offShift() {
   five.textContent = "5";
   six.textContent = "6";
   seven.textContent = "7";
-  eoght.textContent = "8";
+  eight.textContent = "8";
   nine.textContent = "9";
   zero.textContent = "0";
   minus.textContent = "-";
-  equal.textContent = "+";
-  if (lang === "en") {
-    slash.textContent = "/";
-    period.textContent = ".";
-    comma.textContent = ",";
-    quote.textContent = "'";
-    semicolon.textContent = ";";
-    backslash.textContent = "\\";
-    breacketright.textContent = "]";
-    breacketleft.textContent = "[";
+  equal.textContent = "=";
+  if (language === "en") {
     backquote.textContent = "`";
-  } else if (lang === "ru") {
-    slash.textContent = ".";
+    bracketleft.textContent = "[";
+    bracketright.textContent = "]";
     backslash.textContent = "\\";
+    semicolon.textContent = ";";
+    quote.textContent = "'";
+    comma.textContent = ",";
+    period.textContent = ".";
+    slash.textContent = "/";
+  } else if (language === "ru") {
+    backslash.textContent = "\\";
+    slash.textContent = ".";
   }
 }
 function translation() {
-  for (key in data) {
-    const elem = data[key];
-    // console.log(elem);
+  data.forEach((el) => {
+    const elem = el;
     elem.textContent = buttons[lang][elem.dataset.i18n];
-  }
-  // data.forEach((el) => {
-  //   const elem = el;
-  //   elem.textContent = buttons[lang][elem.dataset.i18n];
-  // });
+  });
 }
+
+console.log(data[1]);
+//  console.log(buttons[lang][data[33].dataset.i18n]);
 
 function lowerUpperLetter() {
   if (capsLocked) {
